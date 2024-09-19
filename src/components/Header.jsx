@@ -2,7 +2,9 @@ import React from 'react'
 
 export const Header = () => {
   return (
-    <div>Mi administrador de Proyectos</div>
+    <header className='py-5'>
+      <h1 className='text-center text-3xl font-semibold'>Mi Administrador de Proyectos</h1>
+    </header>
   )
 }
 
