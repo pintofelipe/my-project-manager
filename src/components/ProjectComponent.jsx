@@ -41,6 +41,11 @@ const ProjectComponent = () => {
   };
 
   return (
+
+  
+
+
+
     <div className="mx-auto max-w-6xl container">
       <h1 className="font-semibold text-6xl text-center">Proyectos</h1>
 

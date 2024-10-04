@@ -1,8 +1,12 @@
 import React from 'react'
-
+import { Link } from "react-router-dom";
 
 const LoginUser = () =>{
     return(
+
+
+
+
         <header className='bg-beige-2 grid grid-cols-2 h-[600px] content-center'>
             <div className='bg-marron-2 h-[500px] flex justify-center items-center'>
                 <div className=''>
@@ -24,13 +28,13 @@ const LoginUser = () =>{
                 </div>
 
                 <div className='flex justify-center mb-10'>
-                    <button className='bg-marron-1 rounded-xl mx-3 px-10 h-8'>
+                    <Link to={"task-project"} className='bg-marron-1 rounded-xl mx-3 px-10 h-8'>           
                         sing up
-                    </button>
+                    </Link>
                     
-                    <button className='bg-beige-1 rounded-xl mx-3 px-10 h-8'>
+                    <Link to={"header"} className='bg-beige-1 rounded-xl mx-3 px-10 h-8'>
                         sing in
-                    </button>
+                    </Link>
                 </div>
                </div>
 

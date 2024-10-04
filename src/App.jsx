@@ -1,5 +1,6 @@
+import { Routes, Route } from "react-router-dom"
 import './App.css'
-import { Header } from './components/Header'
+import { Header } from './components/HeaderComponent'
 import ProjectComponent from './components/ProjectComponent'
 import LoginUser from './components/LoginUser'
 
@@ -9,9 +10,15 @@ function App() {
 
   return (
     <>
-    <LoginUser/>
-    <Header />
-    <ProjectComponent />
+    <div>
+      <Routes>
+        <Route path="/" element={<LoginUser/>}  />
+        <Route path="task-project" element={<ProjectComponent/>}  />
+        <Route path="header" element={<Header/>}  />
+
+      </Routes>
+    </div>
+    
     </>
   )
 }
