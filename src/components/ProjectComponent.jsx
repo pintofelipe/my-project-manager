@@ -8,7 +8,7 @@ const ProjectComponent = () => {
       description:
         "Este es un proyecto para mejorar el diseño front-end de nuestra plataforma web. El diseño incluye tanto la optimización de la UI como la UX.",
       deadLine: "2024-09-30",
-      completed: false, 
+      completed: false,
     },
   ]);
 
@@ -20,6 +20,8 @@ const ProjectComponent = () => {
   });
 
   const [error, setError] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   const addProject = () => {
     if (!newProject.title || !newProject.priority || !newProject.deadLine) {
@@ -29,13 +31,28 @@ const ProjectComponent = () => {
 
     const currentDate = new Date();
     const projectDate = new Date(newProject.deadLine);
+
+
     if (projectDate < currentDate) {
       setError("La fecha límite debe ser futura.");
 
       return;
     }
 
-    setProjects([...projects, { ...newProject, completed: false }]);
+
+    
+    if (isEditing) {
+      const updatedProjects = [...projects];
+      updatedProjects[editingIndex] = newProject;
+      setProjects(updatedProjects), setIsEditing(false);
+      setEditingIndex(null);
+    } else {
+      setProjects([...projects, { ...newProject, completed: false }]);
+    }
+
+
+
+
     setNewProject({
       title: "",
       priority: "",
@@ -63,13 +80,14 @@ const ProjectComponent = () => {
   const editProject = (index) => {
     const projectToEdit = projects[index];
     setNewProject(projectToEdit);
-    deleteProject(index);
+    setEditingIndex(index);
   };
 
   // Barra de progreso de proyectos finalizados
   const totalProjects = projects.length;
   const completedProjects = projects.filter((p) => p.completed).length;
-  const progress = totalProjects > 0 ? (completedProjects / totalProjects) * 100 : 0;
+  const progress =
+    totalProjects > 0 ? (completedProjects / totalProjects) * 100 : 0;
 
   return (
     <div className="mx-auto max-w-6xl container">
@@ -139,7 +157,9 @@ const ProjectComponent = () => {
         </div>
       </div>
 
-      <h1 className="font-semibold text-6xl text-center mt-32">Mis Proyectos</h1>
+      <h1 className="font-semibold text-6xl text-center mt-32">
+        Mis Proyectos
+      </h1>
 
       <div className="flex justify-end my-10">
         <span className="flex h-14 justify bg-marron-2 px-6 shadow-md text-center justify-center items-center rounded-xl">
