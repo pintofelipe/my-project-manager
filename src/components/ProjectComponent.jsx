@@ -32,15 +32,12 @@ const ProjectComponent = () => {
     const currentDate = new Date();
     const projectDate = new Date(newProject.deadLine);
 
-
     if (projectDate < currentDate) {
       setError("La fecha límite debe ser futura.");
 
       return;
     }
 
-
-    
     if (isEditing) {
       const updatedProjects = [...projects];
       updatedProjects[editingIndex] = newProject;
@@ -49,9 +46,6 @@ const ProjectComponent = () => {
     } else {
       setProjects([...projects, { ...newProject, completed: false }]);
     }
-
-
-
 
     setNewProject({
       title: "",
@@ -90,7 +84,7 @@ const ProjectComponent = () => {
     totalProjects > 0 ? (completedProjects / totalProjects) * 100 : 0;
 
   return (
-    <div className="mx-auto max-w-6xl container">
+    <div className="mx-auto max-w-6xl container mt-10">
       <h1 className="font-semibold text-6xl text-center">Proyectos</h1>
 
       <div className="bg-beige-3 p-10 rounded-xl mt-10 shadow-lg">
@@ -157,9 +151,30 @@ const ProjectComponent = () => {
         </div>
       </div>
 
-      <h1 className="font-semibold text-6xl text-center mt-32">
-        Mis Proyectos
-      </h1>
+      <div className="mx-auto max-w-6xl">
+        <h1 className="font-semibold text-6xl text-center mt-32">
+          Mis Proyectos
+        </h1>
+
+        <div className="flex h-14 mt-10 mx-auto text-6xl container  items-center rounded-3xl bg-beige-3 ">
+           
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 25 25"
+          strokeWidth="1.0"
+          stroke="currentColor"
+          className="size-6 h-14 container w-14 ml-4"
+          >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+        </svg>
+        <input type="text"  className="bg-beige-3 border-none h-14 text-3xl w-full mr-10 font-mono"/>
+        </div>
+      </div>
 
       <div className="flex justify-end my-10">
         <span className="flex h-14 justify bg-marron-2 px-6 shadow-md text-center justify-center items-center rounded-xl">
@@ -172,6 +187,7 @@ const ProjectComponent = () => {
         <div
           className="bg-green-500 h-4 rounded-full"
           style={{ width: `${progress}%` }}
+          
         ></div>
       </div>
 
@@ -181,7 +197,7 @@ const ProjectComponent = () => {
             key={index}
             className="bg-beige-2 p-6 rounded-xl shadow-md mb-4 border border-marron-1"
           >
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-cente">
               <h3 className="text-marron-1 font-bold text-2xl">
                 {project.title}
               </h3>
@@ -206,7 +222,7 @@ const ProjectComponent = () => {
 
                 <button onClick={() => editProject(index)}>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"r
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
