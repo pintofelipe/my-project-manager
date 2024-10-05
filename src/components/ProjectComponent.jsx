@@ -6,8 +6,9 @@ const ProjectComponent = () => {
       title: "Diseño Front End",
       priority: "Media",
       description:
-        "Este es un proyecto para mejorar el diseño front-end de nuestra plataforma web. El diseño incluye tanto la optimización de la UI como la UX, lo cual implica un trabajo colaborativo entre diseñadores y desarrolladores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil in minim reprehenderit atque.",
-      deadLine: "30-09-2024",
+        "Este es un proyecto para mejorar el diseño front-end de nuestra plataforma web. El diseño incluye tanto la optimización de la UI como la UX.",
+      deadLine: "2024-09-30",
+      completed: false, 
     },
   ]);
 
@@ -18,34 +19,59 @@ const ProjectComponent = () => {
     deadLine: "",
   });
 
-  // Función para agregar un nuevo proyecto
+  const [error, setError] = useState("");
+
   const addProject = () => {
-    setProjects([...projects, newProject]);
+    if (!newProject.title || !newProject.priority || !newProject.deadLine) {
+      setError("Por favor, complete todos los campos.");
+      return;
+    }
+
+    const currentDate = new Date();
+    const projectDate = new Date(newProject.deadLine);
+    if (projectDate < currentDate) {
+      setError("La fecha límite debe ser futura.");
+
+      return;
+    }
+
+    setProjects([...projects, { ...newProject, completed: false }]);
     setNewProject({
       title: "",
       priority: "",
       description: "",
       deadLine: "",
     });
-    console.log("Has agregado un nuevo proyecto");
+    setError("");
   };
 
   // Función para eliminar un proyecto
   const deleteProject = (index) => {
-    setProjects(projects.filter((_, i) => i !== index));
+    if (window.confirm("¿Estás seguro de que deseas eliminar este proyecto?")) {
+      setProjects(projects.filter((_, i) => i !== index));
+    }
   };
 
   // Función para finalizar un proyecto
   const finalizeProject = (index) => {
-    console.log(`Proyecto ${projects[index].title} marcado como finalizado`);
+    const updatedProjects = [...projects];
+    updatedProjects[index].completed = true;
+    setProjects(updatedProjects);
   };
 
+  // Función para editar un proyecto
+  const editProject = (index) => {
+    const projectToEdit = projects[index];
+    setNewProject(projectToEdit);
+    deleteProject(index);
+  };
+
+  // Barra de progreso de proyectos finalizados
+  const totalProjects = projects.length;
+  const completedProjects = projects.filter((p) => p.completed).length;
+  const progress = totalProjects > 0 ? (completedProjects / totalProjects) * 100 : 0;
+
   return (
-
-  
-
-
-
     <div className="mx-auto max-w-6xl container">
       <h1 className="font-semibold text-6xl text-center">Proyectos</h1>
 
@@ -79,7 +105,6 @@ const ProjectComponent = () => {
             <h3>Fecha Límite</h3>
             <input
               type="date"
-              placeholder="Fecha límite"
               value={newProject.deadLine}
               onChange={(e) =>
                 setNewProject({ ...newProject, deadLine: e.target.value })
@@ -89,7 +114,6 @@ const ProjectComponent = () => {
           </div>
         </div>
 
-        {/* Área de texto para la descripción */}
         <div className="mt-6">
           <h3>Descripción</h3>
           <textarea
@@ -101,6 +125,9 @@ const ProjectComponent = () => {
             className="border p-4 h-32 mb-2 bg-beige-2 border-marron-1 rounded-md w-full"
           />
         </div>
+
+        {/* Mostrar el error */}
+        {error && <div className="text-red-700 font-semibold">{error}</div>}
 
         <div className="flex justify-center mt-10">
           <button
@@ -120,6 +147,14 @@ const ProjectComponent = () => {
         </span>
       </div>
 
+      {/* Barra de progreso */}
+      <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+        <div
+          className="bg-green-500 h-4 rounded-full"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+
       <div className="grid grid-cols-3 gap-4">
         {projects.map((project, index) => (
           <div
@@ -132,7 +167,6 @@ const ProjectComponent = () => {
               </h3>
 
               <div className="flex space-x-3">
-                {/* Ícono de Finalizar */}
                 <button onClick={() => finalizeProject(index)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -150,8 +184,7 @@ const ProjectComponent = () => {
                   </svg>
                 </button>
 
-                {/* Ícono de Editar */}
-                <button>
+                <button onClick={() => editProject(index)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -168,7 +201,6 @@ const ProjectComponent = () => {
                   </svg>
                 </button>
 
-                {/* Ícono de Eliminar */}
                 <button onClick={() => deleteProject(index)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -189,12 +221,9 @@ const ProjectComponent = () => {
             </div>
 
             <p className="font-semibold">Prioridad: {project.priority}</p>
-
-            {/* Descripción truncada si es muy larga */}
             <p className="overflow-hidden text-ellipsis max-h-16">
               {project.description}
             </p>
-
             <p className="font-bold mt-4">Fecha límite: {project.deadLine}</p>
           </div>
         ))}
