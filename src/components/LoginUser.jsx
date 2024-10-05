@@ -23,7 +23,7 @@ const LoginUser = () => {
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="bg-white shadow-xl rounded-lg p-8 max-w-md w-full">
         <h2 className="text-4xl font-bold text-center mb-6 text-gray-800">
-          Bienvenido de nuevo
+        Gestor de Proyectos Ágiles
         </h2>
         <p className="text-center text-gray-500 mb-8">
           Inicia sesión con tu correo y contraseña.
