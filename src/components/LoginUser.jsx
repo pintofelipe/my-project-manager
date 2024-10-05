@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 const LoginUser = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
-
   const navigate = useNavigate(); // Usa el hook useNavigate
 
   const handleLogin = () => {
@@ -15,7 +13,7 @@ const LoginUser = () => {
       return;
     }
 
-    setUser({ email: loginData.email });
+
     setError("");
     navigate("/task-project")
     

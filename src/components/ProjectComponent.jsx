@@ -39,15 +39,25 @@ const ProjectComponent = () => {
       return;
     }
 
-    if (isEditing) {
+  
+    if(isEditing && editingIndex !== null){
+
       const updatedProjects = [...projects];
-      updatedProjects[editingIndex] = newProject;
-      setProjects(updatedProjects), setIsEditing(false);
+
+      updatedProjects[editingIndex] = {...newProject, completed: false};
+      setProjects(updatedProjects);
+
+      //cancelar edicion
+
+      setIsEditing(false);
       setEditingIndex(null);
-    } else {
-      setProjects([...projects, { ...newProject, completed: false }]);
+
+    }else{
+      setProjects([...projects, {...newProject, completed: false}])
     }
 
+
+    //reseteo el proyecto
     setNewProject({
       title: "",
       priority: "",
@@ -73,9 +83,11 @@ const ProjectComponent = () => {
 
   // Función para editar un proyecto
   const editProject = (index) => {
+   
     const projectToEdit = projects[index];
     setNewProject(projectToEdit);
-    setEditingIndex(index);
+    setIsEditing(true);
+    setEditingIndex(index)
   };
 
   // Barra de progreso de proyectos finalizados
@@ -178,6 +190,7 @@ const ProjectComponent = () => {
 
       {/* Barra de progreso */}
       <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+       
         <div
           className="bg-green-500 h-4 rounded-full"
           style={{ width: `${progress}%` }}
